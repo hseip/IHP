@@ -12,7 +12,18 @@ let BASE_db = {};
 
 BASE_db.all = () => {
     return new Promise((resolve, reject) => {
-        pool.query('select * from Inclusionary_Housing_Projects;', (err, results) => {
+        pool.query(`select * from Inclusionary_Housing_Projects;`, (err, results) => {
+            if (err) return reject(err);
+            return resolve(results);
+        })
+    })
+}
+BASE_db.locationList = () => {
+    return new Promise((resolve, reject) => {
+        pool.query(`select A.ProjectName, C.Address, C.Latitude, C.Longitude from Inclusionary_Housing_Projects A 
+                    join Inclusionary_Housing_Transfers B  on A.ProjectID = B.GeneratingProjectID
+                    join Inclusionary_Housing_Properties C on B.TransferBuildingID = C.HPDBuildingID
+                    where ProjectName = ?;`, ["THE GARVEY"], (err, results) => {
             if (err) return reject(err);
             return resolve(results);
         })

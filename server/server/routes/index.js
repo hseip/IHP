@@ -14,5 +14,16 @@ router.get('/', async (req, res, next) => {
     }
 
 })
+router.get('/location-list', async (req, res, next) => {
+    console.log('incoming')
+    try {
+        let results = await db.locationList();
+        res.json(results);
+    } catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+
+})
 
 module.exports = router;
