@@ -20,10 +20,11 @@ BASE_db.all = () => {
 }
 BASE_db.locationList = () => {
     return new Promise((resolve, reject) => {
-        pool.query(`select A.ProjectName, C.Address, C.Latitude, C.Longitude from Inclusionary_Housing_Projects A 
-                    join Inclusionary_Housing_Transfers B  on A.ProjectID = B.GeneratingProjectID
-                    join Inclusionary_Housing_Properties C on B.TransferBuildingID = C.HPDBuildingID
-                    where ProjectName = ?;`, ["THE GARVEY"], (err, results) => {
+        pool.query(`select A.ProjectName, C.Address, C.Latitude, C.Longitude, C.Borough from Inclusionary_Housing_Projects A 
+                join Inclusionary_Housing_Transfers B  on A.ProjectID = B.GeneratingProjectID
+                join Inclusionary_Housing_Properties C on B.TransferBuildingID = C.HPDBuildingID
+                group by A.ProjectName, C.Address, C.Latitude, C.Longitude, C.Borough
+                order by A.ProjectName;`, (err, results) => {
             if (err) return reject(err);
             return resolve(results);
         })
