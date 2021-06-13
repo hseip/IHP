@@ -4,13 +4,13 @@
 #----------------------------------
 # install the node server
 #----------------------------------
-cd /var/www/server
+cd /home/ubuntu/BASE/server
 npm install
 
-cp /home/ubuntu/server/.env /var/www/node/.env
+# cp /home/ubuntu/server/.env /var/www/node/.env
 
 #start Node server for social media apis
-systemctl start nodejs
+# systemctl start nodejs
 
 
 #----------------------------------

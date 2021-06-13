@@ -1,4 +1,4 @@
 #!/bin/bash
 
 #stop Node server for BASE IHP
-systemctl stop nodejs
+#systemctl stop nodejs
