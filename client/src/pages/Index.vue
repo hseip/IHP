@@ -91,8 +91,7 @@ export default {
   },
   mounted () {
     const loader = new Loader({
-      // apiKey: "AIzaSyDnzuLi-rwa3Mr3Bl6V4swW_o7UaUyA6BI",
-      apiKey: "AIzaSyDWMpsdLHcbCdkaZ0IeXxNE6X4Cvw0Ln4w",
+      apiKey: process.env.GOOGLE_MAPS_API_KEY,
       version: "weekly",
       libraries: ["places"]
     })

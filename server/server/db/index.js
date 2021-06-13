@@ -1,11 +1,12 @@
 const mysql = require('mysql');
+const { mysql_host, mysql_port, mysql_db, mysql_user, mysql_pass } = require('../../config');
 const pool = mysql.createPool({
     connectionLimit: 10,
-    host: '192.168.1.130',
-    port: '3306',
-    user: 'BASE',
-    password: 'base',
-    database: 'BASE_ihp'
+    host: mysql_host,
+    port: mysql_port,
+    database: mysql_db,
+    user: mysql_user,
+    password: mysql_pass
 });
 
 let BASE_db = {};
