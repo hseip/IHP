@@ -4,23 +4,23 @@
 #----------------------------------
 # install the node server
 #----------------------------------
-cp /home/ubuntu/env/envBASEServer /home/ubuntu/BASE/IHP/server/.env
+cp /home/ubuntu/env/envBASEServer /home/ubuntu/BASE/server/.env
 
-cd /home/ubuntu/BASE/IHP/server
+cd /home/ubuntu/BASE/server
 npm install
 
 
 #----------------------------------
 # build the client app
 #----------------------------------
-cp /home/ubuntu/env/envBASEClient /home/ubuntu/BASE/IHP/client/.env
+cp /home/ubuntu/env/envBASEClient /home/ubuntu/BASE/client/.env
 
-cd /home/ubuntu/BASE/IHP/client
+cd /home/ubuntu/BASE/client
 npm install
 quasar build
 
 # copy bundle to the public directory
-cp /home/ubuntu/BASE/IHP/client/dist/spa/* /home/ubuntu/BASE/IHP/server/public
+cp /home/ubuntu/BASE/client/dist/spa/* /home/ubuntu/BASE/server/public
 
 
 #start Node server for social media apis
