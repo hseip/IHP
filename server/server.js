@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use('/api', apiRouter);
 
-
+console.log(`test NODE_ENV: ${process.env.NODE_ENV}`)
 if (process.env.NODE_ENV === 'PROD') {
 
     app.use(express.static(__dirname + '/public/'));
