@@ -1,5 +1,28 @@
 <template>
   <q-page>
+    <q-ajax-bar
+      ref="bar"
+      position="top"
+      color="red"
+      size="5px"
+    />
+    <q-bar class="bg-secondary text-white">
+      <q-btn flat round dense icon="menu" class="text-white" >
+                <q-menu>
+          <q-list style="min-width: 100px">
+            <q-item clickable v-close-popup @click="help=true">
+              <q-item-section>Help</q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup>
+              <q-item-section>Learn more about BASE</q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+        </q-btn>
+      <div class="text-weight-bold">
+        Bronx Academy of Software Engineering - Inclusionary Housing Project
+      </div>
+    </q-bar>
     <div class="row">
       <div class="col-6">
         <q-list bordered separator class="listHeight">
@@ -26,19 +49,31 @@
         <div class=map id='map' />            
       </div>
     </div>
+        <q-dialog
+      v-model="help"
+      persistent
+      :maximized="true"
+      transition-show="slide-up"
+      transition-hide="slide-down"
+    >
+      <help />
+    </q-dialog>
   </q-page>
 </template>
 
 <script>
+import help from 'pages/help'
 import { Loader } from '@googlemaps/js-api-loader'
 import { GChart } from 'vue-google-charts'
 export default {
   name: 'PageIndex',
   components: {
-    GChart
+    GChart,
+    help
   },
   data () {
     return {
+      help: false,
       locationList: [],
       map: null,
       mapOptions: {
@@ -119,11 +154,11 @@ export default {
 <style scoped>
 .map {
   width: calc(100vw / 2); 
-  height: calc(100vh);
+  height: calc(100vh - 32px);
   overflow:hidden;
 }
 .listHeight {
-  height: calc(100vh / 2);
+  height: calc(100vh / 2 - 32px);
   overflow: auto;
 }
 </style>

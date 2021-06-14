@@ -1,6 +1,5 @@
 // config.js
 const dotenv = require('dotenv').config({path: __dirname + '/.env'});
-console.log(`hallo henniii ${process.env.NODE_ENV}`);
 module.exports = {
   mysql_host:process.env.MYSQL_HOST,
   mysql_port:process.env.MYSQL_PORT,
