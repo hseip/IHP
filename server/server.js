@@ -6,7 +6,7 @@ app.use(express.json());
 app.use('/api', apiRouter);
 
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'PROD') {
 
     app.use(express.static(__dirname + '/public/'));
     app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
