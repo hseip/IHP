@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const { mysql_host, mysql_port, mysql_db, mysql_user, mysql_pass } = require('../../config');
+const { mysql_host, mysql_port, mysql_db, mysql_user, mysql_pass } = require('../config');
 const pool = mysql.createPool({
     connectionLimit: 10,
     host: mysql_host,
