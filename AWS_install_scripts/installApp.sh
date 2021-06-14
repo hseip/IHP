@@ -25,7 +25,7 @@ npm install
 quasar build
 
 # copy bundle to the public directory
-cp /home/ubuntu/BASE/client/dist/spa/* /home/ubuntu/BASE/server/public
+#cp /home/ubuntu/BASE/client/dist/spa/* /home/ubuntu/BASE/server/public
 
 
 #start Node server for social media apis
