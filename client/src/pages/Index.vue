@@ -20,11 +20,18 @@
         Bronx Academy of Software Engineering - Inclusionary Housing Project
       </div>
     </q-bar>
+    <q-select color="teal" filled v-model="borough" :options="boroughs" label="Select a New York city borough">
+      <template v-slot:prepend>
+        <q-avatar size="45px">
+        <img src="~assets/Statue-of-Liberty.jpg">
+      </q-avatar>
+      </template>
+    </q-select>
     <div class="row">
       <div class="col-6">
         <q-list bordered separator class="listHeight">
           <q-item
-            v-for="(location, index) in locationList"
+            v-for="(location, index) in filteredLocations"
             :key="index"
           >
             <q-item-section>{{ location.ProjectName }}</q-item-section>
@@ -33,13 +40,18 @@
             <q-item-section side>{{ location.Longitude }}</q-item-section>
           </q-item>
         </q-list>
-        <div>
-          <GChart
-            type="BarChart"
-            :data="chartData"
-            :options="chartOptions"  
-            style="height: calc((100vh / 2) - 20px);"
-          />
+        <div class="relative-position chartHeight">
+          <div v-if="chartData.length > 1">
+            <GChart
+              type="BarChart"
+              :data="chartData"
+              :options="chartOptions"  
+              class="chartHeight"
+            />
+          </div>
+          <div v-else>
+            <p class="q-ma-none absolute-center">There are no projects in {{ this.borough }}.</p>          
+          </div>
         </div>
       </div>
       <div class="col-6">
@@ -51,7 +63,7 @@
       persistent
       :maximized="true"
       transition-show="slide-up"
-      transition-hide="slide-down"
+      transition-hide="slide-up"
     >
       <about />
     </q-dialog>
@@ -59,19 +71,23 @@
 </template>
 
 <script>
-import about from 'pages/about'
+import About from 'pages/About'
 import { Loader } from '@googlemaps/js-api-loader'
 import { GChart } from 'vue-google-charts'
 export default {
   name: 'PageIndex',
   components: {
     GChart,
-    about
+    About
   },
   data () {
     return {
       help: false,
+      borough: null,
+      boroughs: ['all boroughs', 'Manhattan', 'Bronx', 'Brooklyn', 'Queens', 'Staten Island'],
       locationList: [],
+      filteredLocations: [],
+      mapMarkers: [],
       map: null,
       mapOptions: {
         center: {
@@ -97,28 +113,44 @@ export default {
     }
   },
   watch: {
+    borough () {
+      this.filteredLocations = this.locationList.filter(location => location.Borough === this.borough || this.borough === 'all boroughs')
+      this.updateDisplay()
+    },
     locationList () {
+      this.filteredLocations = this.locationList
+      this.updateDisplay()
+    }
+  },
+  methods: {
+    updateDisplay () {
       // map process
-      for (const location of this.locationList) {
+      for( const marker of this.mapMarkers) {
+        marker.setMap(null)
+      }
+      this.mapMarkers.length = 0
+      for (const location of this.filteredLocations) {
         const latLng = new google.maps.LatLng(location.Latitude,location.Longitude)
         const marker = new google.maps.Marker({
             position: latLng,
             title:location.Address
         })
+        this.mapMarkers.push(marker)
         marker.setMap(this.map)
       }
       // chart processing
-      let boroughs = this.locationList.reduce((acc, location) => {
+      let boroughs = this.filteredLocations.reduce((acc, location) => {
         if (!acc[location['Borough']]) acc[location['Borough']] = 0
         acc[location['Borough']] += 1
         return acc
       }, {})
       let chartData = []
+      this.chartData = []
       chartData.push(['Borough', 'Locations'])
       for (const location of Object.entries(boroughs)) {
         chartData.push(location)
       }
-      this.chartData = chartData      
+      this.chartData = chartData 
     }
   },
   mounted () {
@@ -151,11 +183,14 @@ export default {
 <style scoped>
 .map {
   width: calc(100vw / 2); 
-  height: calc(100vh - 32px);
+  height: calc(100vh - 88px);
   overflow:hidden;
 }
 .listHeight {
-  height: calc(100vh / 2 - 32px);
+  height: calc(100vh / 2 - 88px);
   overflow: auto;
+}
+.chartHeight {
+  height: calc((100vh / 2) - 20px);
 }
 </style>
