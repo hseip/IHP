@@ -11,10 +11,7 @@
                 <q-menu>
           <q-list style="min-width: 100px">
             <q-item clickable v-close-popup @click="help=true">
-              <q-item-section>Help</q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup>
-              <q-item-section>Learn more about BASE</q-item-section>
+              <q-item-section>About BASE</q-item-section>
             </q-item>
           </q-list>
         </q-menu>
@@ -56,20 +53,20 @@
       transition-show="slide-up"
       transition-hide="slide-down"
     >
-      <help />
+      <about />
     </q-dialog>
   </q-page>
 </template>
 
 <script>
-import help from 'pages/help'
+import about from 'pages/about'
 import { Loader } from '@googlemaps/js-api-loader'
 import { GChart } from 'vue-google-charts'
 export default {
   name: 'PageIndex',
   components: {
     GChart,
-    help
+    about
   },
   data () {
     return {
