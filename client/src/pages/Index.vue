@@ -59,6 +59,15 @@
       </div>
     </div>
         <q-dialog
+      v-model="curtain"
+      persistent
+      :maximized="true"
+      transition-show=""
+      transition-hide="slide-up"
+    >
+      <curtain />
+    </q-dialog>
+        <q-dialog
       v-model="help"
       persistent
       :maximized="true"
@@ -72,17 +81,20 @@
 
 <script>
 import About from 'pages/About'
+import Curtain from 'pages/Curtain'
 import { Loader } from '@googlemaps/js-api-loader'
 import { GChart } from 'vue-google-charts'
 export default {
   name: 'PageIndex',
   components: {
     GChart,
-    About
+    About,
+    Curtain
   },
   data () {
     return {
       help: false,
+      curtain: true,
       borough: null,
       boroughs: ['all boroughs', 'Manhattan', 'Bronx', 'Brooklyn', 'Queens', 'Staten Island'],
       locationList: [],
